@@ -10,16 +10,17 @@ protected:
 public:
     Product(string nval, double pval) : name(nval), price(pval)
     {}
-void setPrice(double pval){
-    price = pval;
-}
-    virtual double getPrice(){
-    return price;
-}
-void print(){
-    cout<<"상품명 : "<<name<<endl;
-    cout<<"가  격 : "<<price<<endl;
-}
+    double getPrice() { return price; }
+    void setPrice(double pval){
+        price = pval;
+    }
+    double getPrice(){
+        return price;
+    }
+    void printProductInfo(){
+        cout << "PRODUCT NAME : "<< name <<endl;
+        cout << "PRODUCT PRICE : "<< price <<endl;
+    }
 
 };
 
@@ -30,22 +31,32 @@ private:
 public:
     DiscountProduct(string nval, double pval, double disval) : Product(nval,pval){
         discount = disval;   
-}
-double getPrice(){
-    return price-(price*(discount/100));
-}
-void print(){
-    Product::print();
-    cout << "할인율 : " << discount << endl;
-}
+    }
+    double getPrice(double pval){
+        return price-(price*(discount/100));    //할인된 가격을 반환
+    }
+    void setPrice(double pval){
+        price = getPrice(pval);
+    }
+    void printProductInfo(){
+        Product::printProductInfo();
+        cout << "DISCOUNTED PRICE : " << discount << endl;
+    }
 };
 
 int main(void){
-    Product *p1 = new Product("toothbrush",3000);
-    Product *p2 = new DiscountProduct("toothbrush",3000,15);
+    //객체 생성
+    Product *product1 = new Product("Keychron K3",115000);
+    Product *product2 = new DiscountProduct("Keychron K3",115000,30);
 
-    cout<<p1->getPrice()<<endl;
-    cout<<p2->getPrice()<<endl;
+    //기존의 상품가격과 할인상품의 가격을 출력
+    cout << "할인 적용 전 제품의 정보" << '\n';
+    product1->printProductInfo();
+    cout << endl;
+
+    cout << "할인 적용 후 제품의 정보" << '\n';
+    product2->getPrice();
+    product2->printProductInfo();
 
     return 0;
 }
