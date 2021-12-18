@@ -10,6 +10,7 @@ private:
     double y;
 
 public:
+    Point(){}
     Point(double xval, double yval) : x(xval), y(yval)
     {}
     double getX() { return x; }
@@ -17,6 +18,7 @@ public:
     void setX(double xval) { this->x = xval; }
     void setY(double yval) { this->y = yval; }
     double distance_from_origin();
+    
 };
 
 double Point::distance_from_origin(){
@@ -30,9 +32,9 @@ private:
     double radius;
 
 public:
-    Circle(double x, double y, double radvar) : Point(x, y)
+    Circle(Point(const double& x, const double& y), double radvar)
     {
-        this->center = Point(x, y);
+        this->center = center;
         this->radius = radvar;
     }
     Point getCenter();
